@@ -21,7 +21,6 @@ public class Sc_Room : MonoBehaviour
     int i_currentWave = -1;
     public void OnRoomEnter()
     {
-        Debug.Log("OnRoomEnter");
         foreach (GameObject go in list_blockers) go.SetActive(true);
         b_playerHere = true;
         NextPhase();
@@ -31,13 +30,17 @@ public class Sc_Room : MonoBehaviour
     {
         if (!b_playerHere || i_currentWave == -1) return;
 
-        Wave currentWave = waves[i_currentWave];
-        foreach (Sc_Enemy enemy in currentWave.list_enemies)
+        if (i_currentWave < waves.Count)
         {
-            if (enemy.gameObject.activeSelf) return;
-        }
+            Wave currentWave = waves[i_currentWave];
+            foreach (Sc_Enemy enemy in currentWave.list_enemies)
+            {
+                if (enemy == null) continue;
+                if (enemy.gameObject.activeSelf) return;
+            }
 
-        NextPhase();
+            NextPhase();
+        }
     }
 
     private void NextPhase()
@@ -52,6 +55,7 @@ public class Sc_Room : MonoBehaviour
         Wave currentWave = waves[i_currentWave];
         foreach (Sc_Enemy enemy in currentWave.list_enemies)
         {
+            if (enemy == null) continue;
             enemy.gameObject.SetActive(true);
         }
     }
