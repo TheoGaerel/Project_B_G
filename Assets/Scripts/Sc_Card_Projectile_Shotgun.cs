@@ -7,10 +7,9 @@ public class Sc_Card_Projectile_Shotgun : Sc_Card_Projectile
     public override void OnUse()
     {
         MoveToEndOfStack();
-        Debug.Log("Shotgun Shoot");
-        ShootProjectile(-30);
-        ShootProjectile(0);
-        ShootProjectile(30);
-        StartCoroutine(RoutineToNextCard());
+        ShootProjectile(-15, recoil, range,0.5f,1);
+        ShootProjectile(0, recoil, range, 0.5f, 1);
+        ShootProjectile(15, recoil, range, 0.5f, 1);
+        Sc_PlayerController.Instance.StartDelayNextCard(reload);
     }
 }
