@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Sc_RoomEnterTrigger : MonoBehaviour
 {
+    [SerializeField]
     private Sc_Room linkedRoom;
 
     private void OnTriggerEnter(Collider other)
