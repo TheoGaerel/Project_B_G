@@ -21,7 +21,7 @@ public class Sc_PoolProjectiles : MonoBehaviour
     [SerializeField]
     private List<Sc_Projectile> list_Projectiles = new List<Sc_Projectile>();
     [SerializeField]
-    private Sc_Projectile projectilePrefab;
+    private GameObject projectilePrefab;
 
     public Sc_Projectile RequestProjectile()
     {
@@ -34,7 +34,7 @@ public class Sc_PoolProjectiles : MonoBehaviour
             }
         }
 
-        Sc_Projectile spawnedproj = Instantiate(projectilePrefab);
+        Sc_Projectile spawnedproj = Instantiate(projectilePrefab).GetComponent<Sc_Projectile>();
         spawnedproj.transform.SetParent(this.transform);
         list_Projectiles.Add(spawnedproj);
         return spawnedproj;

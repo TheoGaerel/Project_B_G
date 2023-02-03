@@ -19,9 +19,13 @@ public class Sc_PlayerController : MonoBehaviour
         }
     }
 
-    private const float F_MAX_DASH_DELAY = 0.2f; // 1f
-    private const float F_DASH_TIME = 0.175f; // 1f
-    private const float F_DASH_FORCE = 35f; // 1f
+    [SerializeField] private float F_MAX_DASH_DELAY = 0.5f; // 1f
+    [SerializeField] private float F_DASH_TIME = 0.2f; // 1f
+    [SerializeField] private float F_DASH_FORCE = 35f; // 1f
+
+    [SerializeField] private float F_RECOIL_TIME = 0.1f; // 1f
+    [SerializeField] private float F_RECOIL_FORCE = 0.05f; // 1f
+
     private CharacterController controller;
     private Rigidbody rbBody;
     private PlayerInput playerInput;
@@ -42,7 +46,7 @@ public class Sc_PlayerController : MonoBehaviour
 
     [Header("Cards")]
     public List<Sc_Card> list_cards = new List<Sc_Card>();
-
+    public List<Sc_Card> list_magazine = new List<Sc_Card>();
 
     private void Awake()
     {
@@ -55,6 +59,7 @@ public class Sc_PlayerController : MonoBehaviour
     private void OnEnable()
     {
         playerControls.Enable();
+        list_magazine.AddRange(list_cards);
     }
 
     private void OnDisable()
@@ -69,9 +74,11 @@ public class Sc_PlayerController : MonoBehaviour
         HandleMovements();
         HandleRotation();
         HandleShoot();
-
     }
-
+    private void LateUpdate()
+    {
+        this.transform.position = new Vector3(this.transform.position.x, 1, this.transform.position.z);
+    }
     private void HandleInputs()
     {
         v2_movement = playerControls.Controls.Movement.ReadValue<Vector2>();
@@ -111,33 +118,73 @@ public class Sc_PlayerController : MonoBehaviour
     private IEnumerator DashCoroutine()
     {
         float startTime = Time.time; // need to remember this to know how long to dash
-        Vector3 forward = transform.forward;
         while (Time.time < startTime + F_DASH_TIME)
         {
-            controller.Move(forward * F_DASH_FORCE * Time.deltaTime);
+            controller.Move(new Vector3(v2_movement.x, 0, v2_movement.y) * F_DASH_FORCE * Time.deltaTime);
             yield return null;
         }
         b_inDash = false;
     }
     #endregion // dash
 
+    public void OnRecoil(Sc_Projectile.Recoil recoilMult)
+    {
+        StartCoroutine(RoutineRecoil(recoilMult));
+    }
+
+    private IEnumerator RoutineRecoil(Sc_Projectile.Recoil recoilMult)
+    {
+        float startTime = Time.time; // need to remember this to know how long to dash
+        Vector3 backward = -transform.forward;
+        while (Time.time < startTime + F_RECOIL_TIME)
+        {
+            controller.Move(backward * F_RECOIL_FORCE * (int)recoilMult * Time.deltaTime);
+            yield return null;
+        }
+    }
+
     private void HandleShoot()
     {
-        if (b_shotLock || list_cards.Count == 0) return;
-        if (Mouse.current.leftButton.isPressed)
+        if (b_shotLock || list_magazine.Count == 0) return;
+        if (Mouse.current.leftButton.isPressed && !b_inDash)
         {
             SetShotLock(true);
-            Sc_Card card = list_cards[0];
-            list_cards.RemoveAt(0);
-            list_cards.Add(card);
-
+            Sc_Card card = list_magazine[0];
+            list_magazine.RemoveAt(0);
             card.OnUse();
         }
     }
 
-
     public void SetShotLock(bool isLocked)
     {
         b_shotLock = isLocked;
+        if (!isLocked && list_magazine.Count == 0)
+        {
+            list_magazine.AddRange(list_cards);
+            foreach (Sc_Card card in list_cards) card.gameObject.SetActive(true);
+        }
+    }
+
+    public void StartDelayNextCard(Sc_Projectile.Reload reload)
+    {
+        switch (reload)
+        {
+            case Sc_Projectile.Reload.Fast_0_5:
+                StartCoroutine(RoutineToNextCard(0.5f));
+                break;
+            case Sc_Projectile.Reload.Medium_1:
+                StartCoroutine(RoutineToNextCard(1f));
+                break;
+            case Sc_Projectile.Reload.Slow_2:
+                StartCoroutine(RoutineToNextCard(2f));
+                break;
+
+        }
+
+    }
+    private IEnumerator RoutineToNextCard(float reloadTime)
+    {
+        yield return new WaitForSeconds(reloadTime);
+        SetShotLock(false);
     }
 }
