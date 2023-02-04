@@ -7,8 +7,7 @@ public abstract class Sc_Enemy : Sc_Entity
 {
     [SerializeField]
     protected float f_moveSpeed = 5f;
-    protected const float F_MAX_ATTACK_DELAY = 4f;
-    [SerializeField]
+    protected float F_MAX_ATTACK_DELAY = 4f;
     protected float f_attackdelay;
 
     protected NavMeshAgent navMeshAgent;
@@ -32,7 +31,6 @@ public abstract class Sc_Enemy : Sc_Entity
     {
         Behavior();
     }
-
 
     protected abstract void Behavior();
 

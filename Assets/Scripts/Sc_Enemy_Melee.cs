@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Sc_Enemy_Melee : Sc_Enemy
 {
-    private const float F_DISTANCE_TO_PLAYER = 5f;
-    private const float F_ATTACK_WARMUP = 3.5f;
+    [SerializeField]
+    private float F_ATTACK_WARMUP = 0.75f;
     [SerializeField]
     private float F_ATTACK_RADIUS = 2.35f;
     [SerializeField]
@@ -21,7 +21,10 @@ public class Sc_Enemy_Melee : Sc_Enemy
     protected override void Behavior()
     {
         if (b_meleeAttack) return;
-        this.transform.LookAt(new Vector3(Sc_PlayerController.Instance.transform.position.x, this.transform.position.y, Sc_PlayerController.Instance.transform.position.z));
+
+
+        var targetRotation = Quaternion.LookRotation(Sc_PlayerController.Instance.transform.position - transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10 * Time.deltaTime);
         if (Vector3.Distance(this.transform.position, Sc_PlayerController.Instance.transform.position) > F_ATTACK_RADIUS)
         {
             navMeshAgent.isStopped = false;
@@ -48,15 +51,26 @@ public class Sc_Enemy_Melee : Sc_Enemy
         //attack swipe
         yield return new WaitForSeconds(F_ATTACK_WARMUP);
 
+        go_warningMeleeArea.GetComponent<SpriteRenderer>().color = Color.red;
         Vector3 dirFromAtoB = (Sc_PlayerController.Instance.transform.position - this.transform.position).normalized;
         float dotProd = Vector3.Dot(dirFromAtoB, this.transform.forward);
-        Debug.Log(dotProd);
+
         if (dotProd > 0) //the player is in front of this object
         {
-            //TODO
-            //overlap sphere
+            Collider[] cols = Physics.OverlapSphere(meleeCenterPoint.transform.position, F_ATTACK_RADIUS);
+
+            foreach (Collider col in cols)
+            {
+                if (col.CompareTag("Player"))
+                {
+                    col.GetComponent<Sc_Player>().OnDamage();
+                    break;
+                }
+            }
         }
 
+        yield return new WaitForSecondsRealtime(0.2f);
+        go_warningMeleeArea.GetComponent<SpriteRenderer>().color = Color.white;
         if (go_warningMeleeArea) go_warningMeleeArea.gameObject.SetActive(false);
         f_attackdelay = F_MAX_ATTACK_DELAY;
         b_meleeAttack = false;

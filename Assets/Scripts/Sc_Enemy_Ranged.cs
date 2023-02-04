@@ -32,7 +32,7 @@ public class Sc_Enemy_Ranged : Sc_Enemy
     protected void ShootProjectile()
     {
         Sc_Projectile projectile = Sc_PoolProjectiles.Instance.RequestProjectile();
-        projectile.Init(Sc_Projectile.Team.Enemies, this.gameObject, Sc_Projectile.Range.Far_100, 1);
+        projectile.Init(Sc_Projectile.Team.Enemies, this.gameObject, Sc_Projectile.Range.Far_100, 1,Sc_Projectile.ProjectileType.Enemy);
         projectile.gameObject.SetActive(true);
         projectile.transform.localScale = Vector3.one * 0.5f;
         projectile.transform.position = trsf_launchPoint.position;
