@@ -520,4 +520,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reload: 0
-  button: {fileID: 0}
+  button: {fileID: 5327169179329172739}
+  boostAmount: 2
