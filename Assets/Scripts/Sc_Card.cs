@@ -12,7 +12,7 @@ public abstract class Sc_Card : MonoBehaviour
     public abstract void OnUse();
     protected void MoveToEndOfStack()
     {
-        this.transform.SetAsFirstSibling();
+     //   this.transform.SetAsFirstSibling();
         this.gameObject.SetActive(false);
     }
 

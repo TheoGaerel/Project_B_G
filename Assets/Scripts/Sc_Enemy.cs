@@ -10,6 +10,7 @@ public abstract class Sc_Enemy : Sc_Entity
     protected float F_MAX_ATTACK_DELAY = 4f;
     protected float f_attackdelay;
 
+    private bool b_ready = false;
     protected NavMeshAgent navMeshAgent;
 
     protected virtual void Start()
@@ -17,9 +18,12 @@ public abstract class Sc_Enemy : Sc_Entity
         navMeshAgent = GetComponent<NavMeshAgent>();
         f_attackdelay = F_MAX_ATTACK_DELAY;
         f_attackdelay += Random.Range(-1f, 1f);
+
+        StartCoroutine(RoutineDelayStart());
     }
     public override void OnDamage()
     {
+        if (!b_ready) return;
         f_lifeAmount--;
         if (f_lifeAmount <= 0)
         {
@@ -29,7 +33,14 @@ public abstract class Sc_Enemy : Sc_Entity
 
     private void Update()
     {
+        if (!b_ready) return;
         Behavior();
+    }
+
+    private IEnumerator RoutineDelayStart()
+    {
+        yield return new WaitForSeconds(2f);
+        b_ready = true;
     }
 
     protected abstract void Behavior();

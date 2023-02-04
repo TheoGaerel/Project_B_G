@@ -117,7 +117,7 @@ public class Sc_PlayerController : MonoBehaviour
     private void HandleDash()
     {
         if (f_dashDelay > 0) f_dashDelay -= Time.deltaTime;
-        if (f_dashDelay <= 0 && Mouse.current.rightButton.wasPressedThisFrame)
+        if (f_dashDelay <= 0 && Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             f_dashDelay = F_MAX_DASH_DELAY;
             b_inDash = true;
@@ -219,6 +219,62 @@ public class Sc_PlayerController : MonoBehaviour
         card.transform.SetParent(trsf_Cards);
         card.transform.localScale = Vector3.one;
         list_cards.Add(card);
+        card.transform.SetAsLastSibling();
+        ReloadMagazine();
+    }
+
+    public void DeleteCard(Sc_Card card)
+    {
+        foreach (Sc_Card c in list_cards)
+        {
+            c.ShowButton(false);
+        }
+        list_cards.Remove(card);
+        list_magazine.Remove(card);
+        Destroy(card.gameObject);
+    }
+    public void CopyCard(Sc_Card card)
+    {
+        foreach (Sc_Card c in list_cards)
+        {
+            c.ShowButton(false);
+        }
+        Sc_Card copyCard = Instantiate(card);
+        copyCard.transform.SetParent(card.transform.parent);
+        copyCard.transform.SetAsLastSibling();
+        copyCard.transform.localScale = card.transform.localScale;
+        list_cards.Add(copyCard);
+        list_magazine.Add(copyCard);
+    }
+    public void BuffCard(Sc_Card card)
+    {
+        foreach (Sc_Card c in list_cards)
+        {
+            c.ShowButton(false);
+        }
+    }
+    public void SwitchCard(Sc_Card card1, Sc_Card card2)
+    {
+        foreach (Sc_Card c in list_cards)
+        {
+            c.ShowButton(false);
+        }
+
+        int index1 = list_cards.IndexOf(card1);
+        int index2 = list_cards.IndexOf(card2);
+        list_cards[index1] = card2;
+        list_cards[index2] = card1;
+
+        if (index1 < index2)
+        {
+            card2.transform.SetSiblingIndex(index1);
+            card1.transform.SetSiblingIndex(index2);
+        }
+        else
+        {
+            card1.transform.SetSiblingIndex(index2);
+            card2.transform.SetSiblingIndex(index1);
+        }
         ReloadMagazine();
     }
 }
