@@ -117,7 +117,7 @@ public class Sc_PlayerController : MonoBehaviour
     private void HandleDash()
     {
         if (f_dashDelay > 0) f_dashDelay -= Time.deltaTime;
-        if (f_dashDelay <= 0 && Mouse.current.rightButton.wasPressedThisFrame)
+        if (f_dashDelay <= 0 && Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             f_dashDelay = F_MAX_DASH_DELAY;
             b_inDash = true;
