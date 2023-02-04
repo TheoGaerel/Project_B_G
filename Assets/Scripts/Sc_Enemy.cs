@@ -21,11 +21,9 @@ public abstract class Sc_Enemy : Sc_Entity
     }
     public override void OnDamage()
     {
-        Debug.Log("Enemy is damaged");
         f_lifeAmount--;
         if (f_lifeAmount <= 0)
         {
-            Debug.Log("Player is dead");
             this.gameObject.SetActive(false);
         }
     }
