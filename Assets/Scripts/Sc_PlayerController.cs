@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Sc_PlayerController : MonoBehaviour
 {
@@ -43,10 +45,15 @@ public class Sc_PlayerController : MonoBehaviour
     [SerializeField]
     private float f_dashDelay;
     private bool b_shotLock = false;
+    private bool b_canInteract = true;
 
     [Header("Cards")]
     public List<Sc_Card> list_cards = new List<Sc_Card>();
     public List<Sc_Card> list_magazine = new List<Sc_Card>();
+    [SerializeField]
+    private Transform trsf_Cards;
+    [SerializeField]
+    private Image imgCooldown;
 
     private void Awake()
     {
@@ -54,6 +61,7 @@ public class Sc_PlayerController : MonoBehaviour
         playerControls = new PlayerControls();
         playerInput = GetComponent<PlayerInput>();
         rbBody = GetComponent<Rigidbody>();
+        imgCooldown.fillAmount = 0;
     }
 
     private void OnEnable()
@@ -69,6 +77,7 @@ public class Sc_PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (!b_canInteract) return;
         HandleInputs();
         HandleDash();
         HandleMovements();
@@ -146,7 +155,7 @@ public class Sc_PlayerController : MonoBehaviour
     private void HandleShoot()
     {
         if (b_shotLock || list_magazine.Count == 0) return;
-        if (Mouse.current.leftButton.isPressed && !b_inDash)
+        if (Mouse.current.leftButton.isPressed && !b_inDash && !EventSystem.current.IsPointerOverGameObject())
         {
             SetShotLock(true);
             Sc_Card card = list_magazine[0];
@@ -160,9 +169,21 @@ public class Sc_PlayerController : MonoBehaviour
         b_shotLock = isLocked;
         if (!isLocked && list_magazine.Count == 0)
         {
-            list_magazine.AddRange(list_cards);
-            foreach (Sc_Card card in list_cards) card.gameObject.SetActive(true);
+            ReloadMagazine();
         }
+    }
+
+    private void ReloadMagazine()
+    {
+        imgCooldown.fillAmount = 0;
+        list_magazine.Clear();
+        list_magazine.AddRange(list_cards);
+        foreach (Sc_Card card in list_cards) card.gameObject.SetActive(true);
+    }
+
+    public void SetCanInteract(bool interact)
+    {
+        b_canInteract = interact;
     }
 
     public void StartDelayNextCard(Sc_Projectile.Reload reload)
@@ -178,13 +199,26 @@ public class Sc_PlayerController : MonoBehaviour
             case Sc_Projectile.Reload.Slow_2:
                 StartCoroutine(RoutineToNextCard(2f));
                 break;
-
         }
-
     }
     private IEnumerator RoutineToNextCard(float reloadTime)
     {
-        yield return new WaitForSeconds(reloadTime);
+        float maxreload = reloadTime;
+        while (reloadTime > 0)
+        {
+            imgCooldown.fillAmount = reloadTime / maxreload;
+            reloadTime -= Time.deltaTime;
+            yield return null;
+        }
+        imgCooldown.fillAmount = 0;
         SetShotLock(false);
+    }
+
+    public void AddCard(Sc_Card card)
+    {
+        card.transform.SetParent(trsf_Cards);
+        card.transform.localScale = Vector3.one;
+        list_cards.Add(card);
+        ReloadMagazine();
     }
 }

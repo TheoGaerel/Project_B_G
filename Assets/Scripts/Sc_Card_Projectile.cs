@@ -10,7 +10,7 @@ public class Sc_Card_Projectile : Sc_Card
     public override void OnUse()
     {
         MoveToEndOfStack();
-        ShootProjectile(0, recoil, range,0.5f,1f);
+        ShootProjectile(0, recoil, range,0.5f,1f, Sc_Projectile.ProjectileType.Revolver);
         Sc_PlayerController.Instance.StartDelayNextCard(reload);
     }
 }

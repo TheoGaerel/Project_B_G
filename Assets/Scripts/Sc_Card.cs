@@ -14,10 +14,10 @@ public abstract class Sc_Card : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    protected void ShootProjectile(float angle, Sc_Projectile.Recoil recoil, Sc_Projectile.Range range, float overrideSize, float overrideSpeed)
+    protected void ShootProjectile(float angle, Sc_Projectile.Recoil recoil, Sc_Projectile.Range range, float overrideSize, float overrideSpeed,Sc_Projectile.ProjectileType projectileType)
     {
         Sc_Projectile projectile = Sc_PoolProjectiles.Instance.RequestProjectile();
-        projectile.Init(Sc_Projectile.Team.Player, Sc_PlayerController.Instance.gameObject, range, overrideSpeed);
+        projectile.Init(Sc_Projectile.Team.Player, Sc_PlayerController.Instance.gameObject, range, overrideSpeed, projectileType);
         projectile.gameObject.SetActive(true);
         projectile.transform.position = Sc_PlayerController.Instance.trsf_launchPosition.position;
         projectile.transform.rotation = Sc_PlayerController.Instance.transform.rotation;

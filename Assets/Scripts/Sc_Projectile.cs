@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class Sc_Projectile : MonoBehaviour
 {
-    [SerializeField]
-    protected float f_Speed = 12f;
     public enum Team
     {
         Player,
         Enemies
     }
+
+    public enum ProjectileType
+    {
+        Revolver = 0,
+        Sniper = 1,
+        Shotgun = 2,
+        Enemy = 3
+    }
+
 
     public enum Range
     {
@@ -33,6 +40,11 @@ public class Sc_Projectile : MonoBehaviour
         Heavy_2 = 2
     }
 
+    [SerializeField]
+    protected float f_Speed = 12f;
+    [SerializeField]
+    private List<GameObject> list_projectilesMesh = new List<GameObject>();
+
     public Team projectileTeam;
     public GameObject owner;
 
@@ -40,7 +52,7 @@ public class Sc_Projectile : MonoBehaviour
     private Range range;
     private float f_speedMult = 1f;
 
-    public void Init(Team team, GameObject owner, Range range, float speedMult)
+    public void Init(Team team, GameObject owner, Range range, float speedMult, ProjectileType projectileType)
     {
         this.projectileTeam = team;
         this.owner = owner;
@@ -49,16 +61,11 @@ public class Sc_Projectile : MonoBehaviour
         this.transform.position = owner.transform.position;
         startPosition = owner.transform.position;
         this.f_speedMult = speedMult;
-        if (team == Team.Player)
-        {
-            this.transform.GetChild(0).gameObject.SetActive(true);
-            this.transform.GetChild(1).gameObject.SetActive(false);
-        }
-        else
-        {
-            this.transform.GetChild(0).gameObject.SetActive(false);
-            this.transform.GetChild(1).gameObject.SetActive(true);
-        }
+
+
+        foreach (GameObject go in list_projectilesMesh) if (go != null) go.SetActive(false);
+
+        if (list_projectilesMesh[(int)projectileType] != null) list_projectilesMesh[(int)projectileType].SetActive(true);
     }
 
     private void OnTriggerEnter(Collider other)
