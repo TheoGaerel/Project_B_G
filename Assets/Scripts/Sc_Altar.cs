@@ -36,6 +36,6 @@ public class Sc_Altar : MonoBehaviour
     }
     public void OnInteract()
     {
-
+        Sc_PanelAltar.Instance.OpenPanelAltar(altarType);
     }
 }
