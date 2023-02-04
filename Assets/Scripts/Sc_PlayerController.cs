@@ -173,7 +173,7 @@ public class Sc_PlayerController : MonoBehaviour
         }
     }
 
-    private void ReloadMagazine()
+    public void ReloadMagazine()
     {
         imgCooldown.fillAmount = 0;
         list_magazine.Clear();
