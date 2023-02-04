@@ -30,53 +30,64 @@ public class Sc_PanelAltar : MonoBehaviour
         Sc_PlayerController.Instance.SetCanInteract(false);
         Sc_PlayerController.Instance.ReloadMagazine();
         currentAltarType = altarType;
-        switch (altarType)
-        {
-            case Sc_Altar.AltarType.Delete:
-                DeleteAltar();
-                break;
-            case Sc_Altar.AltarType.Copy:
-                CopyAltar();
-                break;
-            case Sc_Altar.AltarType.Switch:
-                SwitchAltar();
-                break;
-            case Sc_Altar.AltarType.Buff:
-                BuffAltar();
-                break;
-        }
-    }
 
-    private void DeleteAltar()
-    {
-        textDescription.text = "Choissiez une carte à supprimer";
         foreach (Sc_Card card in Sc_PlayerController.Instance.list_cards)
         {
             card.ShowButton(true);
         }
+
+        switch (altarType)
+        {
+            case Sc_Altar.AltarType.Delete:
+                textDescription.text = "Choissiez une carte à supprimer";
+                break;
+            case Sc_Altar.AltarType.Copy:
+                textDescription.text = "Choisissez une carte à copier";
+                break;
+            case Sc_Altar.AltarType.Switch:
+                textDescription.text = "Choisissez deux carte à permuter";
+                break;
+            case Sc_Altar.AltarType.Buff:
+                textDescription.text = "Choisissez une carte à améliorer";
+                break;
+        }
     }
 
-    private void BuffAltar()
+    private void Update()
     {
-        ClosePanelAltar();
-    }
-
-    private void SwitchAltar()
-    {
-        textDescription.text = "Choisissez deux carte à inverser";
-    }
-
-    private void CopyAltar()
-    {
-        textDescription.text = "Choisissez une carte à copier";
+        if (cardSelected != null && currentAltarType != Sc_Altar.AltarType.Switch)
+        {
+            if (currentAltarType == Sc_Altar.AltarType.Delete)
+            {
+                Sc_PlayerController.Instance.DeleteCard(cardSelected);
+            }
+            if (currentAltarType == Sc_Altar.AltarType.Copy)
+            {
+                Sc_PlayerController.Instance.CopyCard(cardSelected);
+            }
+            if (currentAltarType == Sc_Altar.AltarType.Buff)
+            {
+                Sc_PlayerController.Instance.BuffCard(cardSelected);
+            }
+            ClosePanelAltar();
+        }
+        if (cardSelected2 != null && currentAltarType == Sc_Altar.AltarType.Switch)
+        {
+            Sc_PlayerController.Instance.SwitchCard(cardSelected, cardSelected2);
+            ClosePanelAltar();
+        }
     }
 
     public void OnChoiceCard(Sc_Card card)
     {
-        if (cardSelected == null) cardSelected = card;
-        if (cardSelected != null && currentAltarType == Sc_Altar.AltarType.Switch) cardSelected2 = card;
+        Debug.Log("OnChoiceCard : " + card.gameObject.name);
+        if (cardSelected == null)
+        {
+            cardSelected = card;
+            card.ShowButton(false);
+        }
+        else if (cardSelected != null && currentAltarType == Sc_Altar.AltarType.Switch) cardSelected2 = card;
     }
-
 
     public void ClosePanelAltar()
     {

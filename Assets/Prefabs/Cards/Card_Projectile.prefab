@@ -543,6 +543,7 @@ GameObject:
   - component: {fileID: 7127098016722306843}
   - component: {fileID: 5347359514815789537}
   - component: {fileID: 605543139400252238}
+  - component: {fileID: 4824393192133897181}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -651,9 +652,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 693901022159880996}
-        m_TargetAssemblyTypeName: Sc_Card, Assembly-CSharp
-        m_MethodName: OnClickButtonAltar
+      - m_Target: {fileID: 4824393192133897181}
+        m_TargetAssemblyTypeName: Sc_CardButton, Assembly-CSharp
+        m_MethodName: OnCardButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -663,6 +664,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4824393192133897181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4022543360983310829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5991a6066bda14f42908c9745927b184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5219189786356243989
 GameObject:
   m_ObjectHideFlags: 0
@@ -1040,7 +1053,7 @@ GameObject:
   - component: {fileID: 7441024386814615520}
   - component: {fileID: 693901022159880996}
   m_Layer: 5
-  m_Name: Card
+  m_Name: Card_Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1119,7 +1132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reload: 0
-  button: {fileID: 0}
+  button: {fileID: 605543139400252238}
   range: 15
   recoil: 1
 --- !u!1 &7441024386839024656

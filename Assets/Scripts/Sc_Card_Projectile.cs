@@ -9,8 +9,34 @@ public class Sc_Card_Projectile : Sc_Card
     [SerializeField] protected Sc_Projectile.Recoil recoil;
     public override void OnUse()
     {
-        MoveToEndOfStack();
-        ShootProjectile(0, recoil, range,0.5f,1f, Sc_Projectile.ProjectileType.Revolver);
-        Sc_PlayerController.Instance.StartDelayNextCard(reload);
+        
+        if (Sc_Player.Instance.i_boostAmount > 1)
+        {
+            Sc_Player.Instance.SetBoostAmount(Sc_Player.Instance.i_boostAmount - 1);
+            StartCoroutine(RoutineBoost());
+        }
+        else
+        {
+            ShootProjectile(0, recoil, range, 0.5f, 1f, Sc_Projectile.ProjectileType.Revolver);
+            Sc_PlayerController.Instance.StartDelayNextCard(reload);
+            MoveToEndOfStack();
+        }
+     
+    }
+
+    private IEnumerator RoutineBoost()
+    {
+        yield return new WaitForSeconds(0.25f);
+        ShootProjectile(0, recoil, range, 0.5f, 1f, Sc_Projectile.ProjectileType.Revolver);
+        if (Sc_Player.Instance.i_boostAmount > 1)
+        {
+            Sc_Player.Instance.SetBoostAmount(Sc_Player.Instance.i_boostAmount - 1);
+            StartCoroutine(RoutineBoost());
+        }
+        else
+        {
+            MoveToEndOfStack();
+            Sc_PlayerController.Instance.StartDelayNextCard(reload);
+        }
     }
 }
