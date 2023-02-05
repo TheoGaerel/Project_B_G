@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: b4b843ccb142e54498aa93007ce7a5ed, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 43fc67faee7ae8540b8d467ecd4956e0, type: 2}
 --- !u!43 &44125017
 Mesh:
   m_ObjectHideFlags: 0
@@ -9810,7 +9810,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.38759354, y: 0.000000022431358, z: -0.0000000094315045, w: 0.9218304}
+  m_LocalRotation: {x: 0.38759357, y: -0.000000022431356, z: 0.0000000094315045, w: 0.9218304}
   m_LocalPosition: {x: 0, y: 17.62, z: -16.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -19842,7 +19842,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7771084, y: 1}
+    m_SensorSize: {x: 1.3333334, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -19858,7 +19858,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2057760309}
-  m_LocalRotation: {x: 0.38759354, y: 0.000000022431358, z: -0.0000000094315045, w: 0.9218304}
+  m_LocalRotation: {x: 0.38759357, y: -0.000000022431356, z: 0.0000000094315045, w: 0.9218304}
   m_LocalPosition: {x: 0, y: 17.62, z: -16.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
