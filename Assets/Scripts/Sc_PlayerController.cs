@@ -55,6 +55,12 @@ public class Sc_PlayerController : MonoBehaviour
     [SerializeField]
     private Image imgCooldown;
 
+    [Header("Sounds")]
+    [SerializeField]
+    private AudioSource musicExploration;
+    [SerializeField]
+    private AudioSource musicBattle;
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -62,6 +68,8 @@ public class Sc_PlayerController : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         rbBody = GetComponent<Rigidbody>();
         imgCooldown.fillAmount = 0;
+
+        if (musicExploration) musicExploration.Play();
     }
 
     private void OnEnable()
@@ -276,5 +284,19 @@ public class Sc_PlayerController : MonoBehaviour
             card2.transform.SetSiblingIndex(index1);
         }
         ReloadMagazine();
+    }
+
+    public void PlayMusic(bool battle)
+    {
+        if (battle)
+        {
+            musicExploration.Stop();
+            musicBattle.Play();
+        }
+        else
+        {
+            musicExploration.Play();
+            musicBattle.Stop();
+        }
     }
 }

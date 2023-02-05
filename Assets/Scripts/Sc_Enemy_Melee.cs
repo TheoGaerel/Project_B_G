@@ -12,6 +12,8 @@ public class Sc_Enemy_Melee : Sc_Enemy
     private GameObject go_warningMeleeArea;
     [SerializeField]
     private Transform meleeCenterPoint;
+    [SerializeField]
+    private AudioSource sound_Slash;
 
     private bool b_meleeAttack = false;
     //20% faster than player
@@ -51,6 +53,7 @@ public class Sc_Enemy_Melee : Sc_Enemy
         //attack swipe
         yield return new WaitForSeconds(F_ATTACK_WARMUP);
 
+        if (sound_Slash) sound_Slash.Play();
         go_warningMeleeArea.GetComponent<SpriteRenderer>().color = Color.red;
         Vector3 dirFromAtoB = (Sc_PlayerController.Instance.transform.position - this.transform.position).normalized;
         float dotProd = Vector3.Dot(dirFromAtoB, this.transform.forward);

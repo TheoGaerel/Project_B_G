@@ -32,6 +32,7 @@ public class Sc_Room : MonoBehaviour
         foreach (GameObject go in list_blockers) go.SetActive(true);
         b_playerHere = true;
         if (altarRoom) altarRoom.gameObject.SetActive(false);
+        Sc_PlayerController.Instance.PlayMusic(true);
         NextPhase();
     }
 
@@ -71,6 +72,7 @@ public class Sc_Room : MonoBehaviour
 
     public void OnRoomFinish()
     {
+        Sc_PlayerController.Instance.PlayMusic(true);
         foreach (GameObject go in list_blockers) go.SetActive(false);
         StartCoroutine(RoutineDelayRewards());
     }

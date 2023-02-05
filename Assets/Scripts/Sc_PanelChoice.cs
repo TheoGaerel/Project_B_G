@@ -48,7 +48,7 @@ public class Sc_PanelChoice : MonoBehaviour
         else
         {
             Sc_PlayerController.Instance.AddCard(cardLeft);
-            Destroy(cardRight);
+            Destroy(cardRight.gameObject);
         }
 
         Sc_PlayerController.Instance.SetCanInteract(true);
@@ -64,7 +64,7 @@ public class Sc_PanelChoice : MonoBehaviour
         else
         {
             Sc_PlayerController.Instance.AddCard(cardRight);
-            Destroy(cardLeft);
+            Destroy(cardLeft.gameObject);
         }
 
         Sc_PlayerController.Instance.SetCanInteract(true);

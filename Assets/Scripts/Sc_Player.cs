@@ -22,6 +22,11 @@ public class Sc_Player : Sc_Entity
     [SerializeField]
     private List<Image> list_Hearts = new List<Image>();
     public int i_boostAmount { get; private set; } = 1;
+
+    [SerializeField]
+    private AudioSource sound_OnHit;
+
+
     private void Start()
     {
         for (int i = 0; i < list_Hearts.Count; i++)
@@ -40,7 +45,7 @@ public class Sc_Player : Sc_Entity
     public override void OnDamage()
     {
         f_lifeAmount--;
-
+        if (sound_OnHit) sound_OnHit.Play();
         for (int i = 0; i < list_Hearts.Count; i++)
         {
             if (i < f_lifeAmount) list_Hearts[i].gameObject.SetActive(true);
