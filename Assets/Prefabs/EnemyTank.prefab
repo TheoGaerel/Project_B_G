@@ -27,6 +27,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2864221885209936422, guid: e5ce842dfdd010f469a402fe5136ba6a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.0378973
+      objectReference: {fileID: 0}
+    - target: {fileID: 2864221885209936422, guid: e5ce842dfdd010f469a402fe5136ba6a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.0239882
+      objectReference: {fileID: 0}
     - target: {fileID: 5327169664097965024, guid: e5ce842dfdd010f469a402fe5136ba6a, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -93,7 +101,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 07dc66ae04b7f6a43b9674bf0fefb33a, type: 2}
     - target: {fileID: 6409548664992992112, guid: e5ce842dfdd010f469a402fe5136ba6a, type: 3}
       propertyPath: f_moveSpeed
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6409548664992992112, guid: e5ce842dfdd010f469a402fe5136ba6a, type: 3}
       propertyPath: f_lifeAmount
@@ -101,11 +109,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6409548664992992112, guid: e5ce842dfdd010f469a402fe5136ba6a, type: 3}
       propertyPath: F_ATTACK_RADIUS
-      value: 4.7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7030634832624620575, guid: e5ce842dfdd010f469a402fe5136ba6a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5ce842dfdd010f469a402fe5136ba6a, type: 3}
