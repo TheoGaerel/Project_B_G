@@ -13,6 +13,9 @@ public abstract class Sc_Enemy : Sc_Entity
     private bool b_ready = false;
     protected NavMeshAgent navMeshAgent;
     protected Sc_CanvasEnemy canvasEnemy;
+
+    [SerializeField]
+    private AudioSource sound_OnHit;
     protected virtual void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -31,6 +34,7 @@ public abstract class Sc_Enemy : Sc_Entity
         if (!b_ready) return;
         f_lifeAmount--;
 
+        if (sound_OnHit) sound_OnHit.Play();
         for (int i = 0; i < canvasEnemy.list_hearts.Count; i++)
         {
             if (i < f_lifeAmount) canvasEnemy.list_hearts[i].gameObject.SetActive(true);
