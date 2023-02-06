@@ -442,7 +442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   f_lifeAmount: 5
-  f_moveSpeed: 10
+  animator: {fileID: 0}
   sound_OnHit: {fileID: 4165702113745639030}
   F_ATTACK_WARMUP: 0.5
   F_ATTACK_RADIUS: 3

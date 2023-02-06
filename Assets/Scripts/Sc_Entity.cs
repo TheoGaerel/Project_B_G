@@ -5,6 +5,6 @@ using UnityEngine;
 public abstract class Sc_Entity : MonoBehaviour
 {
     [SerializeField]
-    protected float f_lifeAmount = 1f;
+    public float f_lifeAmount { get; protected set; } = 1f;
     public abstract void OnDamage();
 }

@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public abstract class Sc_Enemy : Sc_Entity
 {
     [SerializeField]
+    protected Animator animator;
     protected float f_moveSpeed = 5f;
     protected float F_MAX_ATTACK_DELAY = 4f;
     protected float f_attackdelay;
@@ -19,6 +20,7 @@ public abstract class Sc_Enemy : Sc_Entity
     protected virtual void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        animator = GetComponentInChildren<Animator>();
         f_attackdelay = F_MAX_ATTACK_DELAY;
         f_attackdelay += Random.Range(-1f, 1f);
         canvasEnemy = GetComponentInChildren<Sc_CanvasEnemy>();
@@ -31,7 +33,7 @@ public abstract class Sc_Enemy : Sc_Entity
     }
     public override void OnDamage()
     {
-        if (!b_ready) return;
+        if (!b_ready || !Sc_PlayerController.Instance.b_canInteract) return;
         f_lifeAmount--;
 
         if (sound_OnHit) sound_OnHit.Play();
@@ -49,7 +51,12 @@ public abstract class Sc_Enemy : Sc_Entity
 
     private void Update()
     {
-        if (!b_ready) return;
+        if (!b_ready || !Sc_PlayerController.Instance.b_canInteract)
+        {
+            this.transform.LookAt(new Vector3(Sc_PlayerController.Instance.transform.position.x, this.transform.position.y, Sc_PlayerController.Instance.transform.position.z));
+            navMeshAgent.isStopped = true;
+            return;
+        }
         Behavior();
     }
 

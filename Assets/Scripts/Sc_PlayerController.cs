@@ -29,7 +29,7 @@ public class Sc_PlayerController : MonoBehaviour
     [SerializeField] private float F_RECOIL_FORCE = 0.05f; // 1f
 
     private CharacterController controller;
-    private Rigidbody rbBody;
+    public Animator animator;
     private PlayerInput playerInput;
     private PlayerControls playerControls;
     public Transform trsf_launchPosition;
@@ -45,7 +45,7 @@ public class Sc_PlayerController : MonoBehaviour
     [SerializeField]
     private float f_dashDelay;
     private bool b_shotLock = false;
-    private bool b_canInteract = true;
+    public bool b_canInteract { get; private set; } = true;
 
     [Header("Cards")]
     public List<Sc_Card> list_cards = new List<Sc_Card>();
@@ -60,13 +60,13 @@ public class Sc_PlayerController : MonoBehaviour
     private AudioSource musicExploration;
     [SerializeField]
     private AudioSource musicBattle;
-
+    private Vector3 lastPos = Vector3.zero;
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
         playerControls = new PlayerControls();
         playerInput = GetComponent<PlayerInput>();
-        rbBody = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
         imgCooldown.fillAmount = 0;
 
         if (musicExploration) musicExploration.Play();
@@ -91,6 +91,13 @@ public class Sc_PlayerController : MonoBehaviour
         HandleMovements();
         HandleRotation();
         HandleShoot();
+
+        if (lastPos != transform.position)
+        {
+            animator.SetBool("b_Run", true);
+        }
+        else animator.SetBool("b_Run", false);
+        lastPos = transform.position;
     }
     private void LateUpdate()
     {
