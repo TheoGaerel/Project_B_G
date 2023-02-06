@@ -4,13 +4,26 @@ using UnityEngine;
 
 public class Sc_RoomBlocker : MonoBehaviour
 {
+    [SerializeField]
+    private Animator animator;
+    private AudioSource audioSource;
+
+    private void Start()
+    {
+        animator = GetComponentInChildren<Animator>();
+        audioSource = GetComponentInChildren<AudioSource>();
+    }
     public virtual void OnRoomEnter()
     {
-        this.gameObject.SetActive(true);
+        if (animator) animator.SetBool("b_Open", false);
+        else this.gameObject.SetActive(true);
+        if (audioSource) audioSource.Play();
     }
 
     public virtual void OnRoomBattleFinish()
     {
-        this.gameObject.SetActive(false);
+        if (animator) animator.SetBool("b_Open", true);
+        else this.gameObject.SetActive(false);
+        if (audioSource) audioSource.Play();
     }
 }
