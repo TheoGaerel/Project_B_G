@@ -53,11 +53,11 @@ public class Sc_Enemy_Melee : Sc_Enemy
         //attack swipe
         yield return new WaitForSeconds(F_ATTACK_WARMUP);
 
+        animator.SetTrigger("t_Attack");
         if (sound_Slash) sound_Slash.Play();
         go_warningMeleeArea.GetComponent<SpriteRenderer>().color = Color.red;
         Vector3 dirFromAtoB = (Sc_PlayerController.Instance.transform.position - this.transform.position).normalized;
         float dotProd = Vector3.Dot(dirFromAtoB, this.transform.forward);
-
         if (dotProd > 0) //the player is in front of this object
         {
             Collider[] cols = Physics.OverlapSphere(meleeCenterPoint.transform.position, F_ATTACK_RADIUS);
@@ -72,7 +72,7 @@ public class Sc_Enemy_Melee : Sc_Enemy
             }
         }
 
-        yield return new WaitForSecondsRealtime(0.2f);
+        yield return new WaitForSecondsRealtime(1.2f);
         go_warningMeleeArea.GetComponent<SpriteRenderer>().color = Color.white;
         if (go_warningMeleeArea) go_warningMeleeArea.gameObject.SetActive(false);
         f_attackdelay = F_MAX_ATTACK_DELAY;

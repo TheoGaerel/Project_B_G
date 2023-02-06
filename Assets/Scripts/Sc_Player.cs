@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Sc_Player : Sc_Entity
@@ -44,6 +45,7 @@ public class Sc_Player : Sc_Entity
 
     public override void OnDamage()
     {
+        if (!Sc_PlayerController.Instance.b_canInteract) return;
         f_lifeAmount--;
         if (sound_OnHit) sound_OnHit.Play();
         for (int i = 0; i < list_Hearts.Count; i++)
@@ -54,7 +56,9 @@ public class Sc_Player : Sc_Entity
 
         if (f_lifeAmount <= 0)
         {
-            Debug.Log("Player is dead");
+            Sc_PlayerController.Instance.SetCanInteract(false);
+            Sc_PlayerController.Instance.animator.SetTrigger("t_Death");
+            StartCoroutine(RoutineDeath());
         }
     }
 
@@ -72,5 +76,11 @@ public class Sc_Player : Sc_Entity
     public void SetBoostAmount(int amount)
     {
         i_boostAmount = amount;
+    }
+
+    private IEnumerator RoutineDeath()
+    {
+        yield return new WaitForSecondsRealtime(2f);
+        SceneManager.LoadScene(0);
     }
 }

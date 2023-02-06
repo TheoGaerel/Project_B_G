@@ -35,6 +35,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1.0239882
       objectReference: {fileID: 0}
+    - target: {fileID: 4843944210701338514, guid: e5ce842dfdd010f469a402fe5136ba6a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5327169664097965024, guid: e5ce842dfdd010f469a402fe5136ba6a, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -110,6 +114,10 @@ PrefabInstance:
     - target: {fileID: 6409548664992992112, guid: e5ce842dfdd010f469a402fe5136ba6a, type: 3}
       propertyPath: F_ATTACK_RADIUS
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6801019317276946642, guid: e5ce842dfdd010f469a402fe5136ba6a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7030634832624620575, guid: e5ce842dfdd010f469a402fe5136ba6a, type: 3}
       propertyPath: m_IsActive
