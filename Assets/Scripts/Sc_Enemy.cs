@@ -8,6 +8,7 @@ public abstract class Sc_Enemy : Sc_Entity
     [SerializeField]
     protected Animator animator;
     protected float f_moveSpeed = 5f;
+    [SerializeField]
     protected float F_MAX_ATTACK_DELAY = 4f;
     protected float f_attackdelay;
 
