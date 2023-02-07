@@ -314,6 +314,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   f_lifeAmount: 3
   animator: {fileID: 0}
+  F_MAX_ATTACK_DELAY: 1.8
   sound_OnHit: {fileID: 4827578234651941716}
   trsf_launchPoint: {fileID: 4489481040642455395}
 --- !u!1001 &2886985764733804527

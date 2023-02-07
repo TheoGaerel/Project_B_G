@@ -441,8 +441,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b55f9352bbe657e4aaa15b90ead43b80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  f_lifeAmount: 5
+  f_lifeAmount: 4
   animator: {fileID: 0}
+  F_MAX_ATTACK_DELAY: 2.5
   sound_OnHit: {fileID: 4165702113745639030}
   F_ATTACK_WARMUP: 0.5
   F_ATTACK_RADIUS: 3
