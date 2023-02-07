@@ -288,7 +288,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 10000
@@ -313,6 +313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   f_lifeAmount: 3
+  animator: {fileID: 0}
   sound_OnHit: {fileID: 4827578234651941716}
   trsf_launchPoint: {fileID: 4489481040642455395}
 --- !u!1001 &2886985764733804527
