@@ -23,6 +23,8 @@ public class Sc_Player : Sc_Entity
     [SerializeField]
     private List<Image> list_Hearts = new List<Image>();
     public int i_boostAmount { get; private set; } = 1;
+    private bool b_Invincible = false;
+
 
     [SerializeField]
     private AudioSource sound_OnHit;
@@ -39,13 +41,12 @@ public class Sc_Player : Sc_Entity
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Player hit by : " + collision.collider.gameObject.name);
         OnDamage();
     }
 
     public override void OnDamage()
     {
-        if (!Sc_PlayerController.Instance.b_canInteract) return;
+        if (!Sc_PlayerController.Instance.b_canInteract || b_Invincible) return;
         f_lifeAmount--;
         if (sound_OnHit) sound_OnHit.Play();
         for (int i = 0; i < list_Hearts.Count; i++)
@@ -60,6 +61,9 @@ public class Sc_Player : Sc_Entity
             Sc_PlayerController.Instance.animator.SetTrigger("t_Death");
             StartCoroutine(RoutineDeath());
         }
+
+        b_Invincible = true;
+        StartCoroutine(RoutineInvincible());
     }
 
     public void OnHeal()
@@ -80,7 +84,12 @@ public class Sc_Player : Sc_Entity
 
     private IEnumerator RoutineDeath()
     {
-        yield return new WaitForSecondsRealtime(2f);
+        yield return new WaitForSecondsRealtime(5f);
         SceneManager.LoadScene(0);
+    }
+    private IEnumerator RoutineInvincible()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+        b_Invincible = false;
     }
 }

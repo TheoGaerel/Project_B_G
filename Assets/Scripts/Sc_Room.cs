@@ -29,7 +29,11 @@ public class Sc_Room : MonoBehaviour
     int i_currentWave = -1;
     public void OnRoomEnter()
     {
-        foreach (GameObject go in list_blockers) go.SetActive(true);
+        foreach (GameObject go in list_blockers)
+        {
+            if (go != null && go.GetComponent<Sc_RoomBlocker>()) go.GetComponent<Sc_RoomBlocker>().OnRoomEnter();
+            else if (go != null) go.SetActive(true);
+        }
         b_playerHere = true;
         if (altarRoom) altarRoom.gameObject.SetActive(false);
         Sc_PlayerController.Instance.PlayMusic(true);
@@ -73,7 +77,13 @@ public class Sc_Room : MonoBehaviour
     public void OnRoomFinish()
     {
         Sc_PlayerController.Instance.PlayMusic(true);
-        foreach (GameObject go in list_blockers) go.SetActive(false);
+
+        foreach (GameObject go in list_blockers)
+        {
+            if (go != null && go.GetComponent<Sc_RoomBlocker>()) go.GetComponent<Sc_RoomBlocker>().OnRoomBattleFinish();
+            else if (go != null) go.SetActive(false);
+
+        }
         StartCoroutine(RoutineDelayRewards());
     }
 
