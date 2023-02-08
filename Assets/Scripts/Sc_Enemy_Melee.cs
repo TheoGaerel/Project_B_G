@@ -24,16 +24,18 @@ public class Sc_Enemy_Melee : Sc_Enemy
     {
         if (b_meleeAttack) return;
 
-
         var targetRotation = Quaternion.LookRotation(Sc_PlayerController.Instance.transform.position - transform.position);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10 * Time.deltaTime);
         if (Vector3.Distance(this.transform.position, Sc_PlayerController.Instance.transform.position) > F_ATTACK_RADIUS)
         {
+
+            animator.SetBool("b_Run", true);
             navMeshAgent.isStopped = false;
             navMeshAgent.SetDestination(Sc_PlayerController.Instance.transform.position);
         }
         else
         {
+            animator.SetBool("b_Run", false);
             navMeshAgent.isStopped = true;
         }
 
