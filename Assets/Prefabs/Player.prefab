@@ -280,8 +280,9 @@ MonoBehaviour:
   F_DASH_FORCE: 35
   F_RECOIL_TIME: 0.1
   F_RECOIL_FORCE: 5
+  animator: {fileID: 0}
   trsf_launchPosition: {fileID: 4472079486825056664}
-  f_playerSpeed: 5
+  f_playerSpeed: 7
   v2_movement: {x: 0, y: 0}
   v3_aim: {x: 0, y: 0, z: 0}
   f_dashDelay: 0
